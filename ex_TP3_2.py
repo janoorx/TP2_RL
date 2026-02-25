@@ -2,7 +2,21 @@ from ex_TP2_1 import *
 from ex_TP2_2 import *
 from ex_TP2_3 import *
 
-def train_Q_learning_lambda(n_episodes, N0,Qsa_MC):
+def train_Q_learning_lambda(n_episodes, N0, Qsa_MC):
+    """
+    Cette fonction implémente l'algorithme Q-learning(λ) pour apprendre la politique optimale au Blackjack, 
+    en utilisant des traces d'éligibilité pour accélérer l'apprentissage.
+
+    Args:
+        n_episodes (int): nombre d'épisodes d'apprentissage
+        N0 (int): paramètre de contrôle de l'exploration pour la politique epsilon-greedy
+        Qsa_MC (np.array): table de valeurs d'action Q(s, a) apprise par l'algorithme de contrôle Monte Carlo
+    Returns:
+        Qsa (np.array): table de valeurs d'action Q(s, a) apprise par Q-learning(λ)
+        Nsa (np.array): table du nombre de visites de chaque paire (s, a) après l'apprentissage
+        Ns (np.array): table du nombre de visites de chaque état s après l'apprentissage
+        MSEs (list): liste des erreurs quadratiques moyennes (MSE) entre Qsa de Q-learning(λ) et Qsa_MC à chaque épisode d'apprentissage
+    """
     #Lambda value = 0 pour TD(0) 
     lambda_value = 0
     #MSEs à chaqeu épisode d'apprentissage
@@ -63,6 +77,13 @@ def train_Q_learning_lambda(n_episodes, N0,Qsa_MC):
     return Qsa, Nsa, Ns, MSEs
 
 def plot_MSE_Q_learning_lambda(list_MSEs):
+    """
+    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par Q-learning(λ)
+    et la table Q(s, a) apprise par Monte Carlo
+
+    Args:
+        list_MSEs (list): liste de tuples (λ, MSEs) où λ est la valeur de lambda utilisée et MSEs est la liste des MSE à chaque épisode d'apprentissage pour cette valeur de lambda
+    """
     #Il y a deux lambda (0 et 1) et le MSE du Q-learning
     for name, MSEs in list_MSEs:
         if(name == "Q-learning"):
@@ -78,6 +99,10 @@ def plot_MSE_Q_learning_lambda(list_MSEs):
 
 
 def ex_TP3_2():
+    """
+    Fonction principale pour exécuter l'exercice 2 du TP3, qui permet à l'utilisateur de choisir entre calculer
+    la MSE pour différentes valeurs de λ ou tracer la surface de valeur optimale V*(s).
+    """
     choice = input("\033[1;36mVoulez-vous exécuter la question 2 (MSE) ou la question 3 (surface de valeur) ou quitter l'exercice 'q'? (2, 3 ou q) : \033[0;37m")
     # Nombre d'épisodes d'apprentissage
     N = 100000

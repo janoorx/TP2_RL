@@ -13,7 +13,12 @@ EPSILON = 0.05
 def feature_vector(state, action):
     """
     Construit le vecteur de caracteristiques binaires phi(s, a).
-    Retourne un numpy array de dimension 36.
+    
+    Args:
+        state (dict): état actuel du jeu, avec les clés "player" et "dealer"
+        action (str): action choisie ("hit" ou "stick")
+    Returns:
+        np.array: vecteur de caracteristiques binaires phi(s, a)
     """
     phi = np.zeros((len(INTERVALLES_DEALER),len(INTERVALLES_PLAYER),len(ACTIONS)))
     

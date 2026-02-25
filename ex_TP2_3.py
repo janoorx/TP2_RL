@@ -5,7 +5,21 @@ from ex_TP2_2 import *
 
 
 def train_sarsa_lambda(n_episodes, N0,lambda_value,Qsa_MC):
-    
+    """
+    Cette fonction implémente l'algorithme SARSA(λ) pour apprendre la politique optimale au Blackjack, 
+    en utilisant des traces d'éligibilité pour accélérer l'apprentissage.
+
+    Args:
+        n_episodes (int): nombre d'épisodes d'apprentissage
+        N0 (int): paramètre de contrôle de l'exploration pour la politique epsilon-greedy
+        lambda_value (float): paramètre pour les traces d'éligibilité (0 ≤ λ ≤ 1)
+        Qsa_MC (np.array): table de valeurs d'action Q(s, a) apprise par l'algorithme de contrôle Monte Carlo
+    Returns:
+        Qsa (np.array): table de valeurs d'action Q(s, a) apprise par SARSA(λ)
+        Nsa (np.array): table du nombre de visites de chaque paire (s, a) après l'apprentissage
+        Ns (np.array): table du nombre de visites de chaque état s après l'apprentissage
+        MSEs (list): liste des erreurs quadratiques moyennes (MSE) entre Qsa de SARSA(λ) et Qsa_MC à chaque épisode d'apprentissage
+    """
     #MSEs à chaqeu épisode d'apprentissage
     MSEs = []
 
@@ -61,9 +75,30 @@ def train_sarsa_lambda(n_episodes, N0,lambda_value,Qsa_MC):
     return Qsa, Nsa, Ns, MSEs
 
 def calcul_MSE(Qsa1, Qsa2):
+    """
+    Calcul l'erreur quadratique moyenne (MSE) entre deux tables de valeurs d'action Q(s, a).
+
+    Args:
+        Qsa1 (np.array): première table de valeurs d'action Q(s, a)
+        Qsa2 (np.array): deuxième table de valeurs d'action Q(s, a)
+    Returns:
+        float: l'erreur quadratique moyenne (MSE) entre Qsa1 et Qsa2
+    """
     return np.mean((Qsa1 - Qsa2) ** 2)
 
 def test_policy_variable_lambdas(N, N0, lambda_values, Qsa_MC):
+    """
+    Test la politique apprise par SARSA(λ) pour différentes valeurs de λ, 
+    en calculant l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par SARSA(λ) et la table Q(s, a) apprise par Monte Carlo.
+
+    Args:
+        N (int): nombre d'épisodes d'apprentissage
+        N0 (int): paramètre de contrôle de l'exploration pour la politique epsilon-greedy
+        lambda_values (list): liste des différentes valeurs de λ à tester
+        Qsa_MC (np.array): table de valeurs d'action Q(s, a) apprise par l'algorithme de contrôle Monte Carlo
+    Returns:
+        MSEs: liste des erreurs quadratiques moyennes (MSE) pour chaque valeur de λ testée
+    """
     MSEs = []
     for lambda_val in lambda_values:
         Qsa_SARSA, _, _, _ = train_sarsa_lambda(N,N0,lambda_val,Qsa_MC)
@@ -74,6 +109,14 @@ def test_policy_variable_lambdas(N, N0, lambda_values, Qsa_MC):
     return MSEs
 
 def plot_MSE_lambda(MSEs, lambda_values):
+    """
+    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par SARSA(λ) 
+    et la table Q(s, a) apprise par Monte Carlo en fonction des différentes valeurs de λ testées.
+
+    Args:
+        MSEs (list): liste des erreurs quadratiques moyennes (MSE) pour chaque valeur de λ testée
+        lambda_values (list): liste des différentes valeurs de λ
+    """
     print("Affichage graphique de  la MSE en fonction de λ ...")
     plt.figure()
     plt.plot(lambda_values, MSEs, marker='o')
@@ -84,6 +127,13 @@ def plot_MSE_lambda(MSEs, lambda_values):
     plt.show()
 
 def plot_MSEs_learning(list_MSEs):
+    """
+    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par SARSA(λ) 
+    et la table Q(s, a) apprise par Monte Carlo en fonction du numéro d’épisode d'apprentissage, pour différentes valeurs de λ.
+
+    Args:
+        list_MSEs (list): liste de tuples (λ, MSEs)
+    """
     print("Affichage graphique de la MSE en fonction des épisodes d'apprentissage ...")
     plt.figure()
     for lambda_val, MSEs in list_MSEs:
@@ -97,6 +147,10 @@ def plot_MSEs_learning(list_MSEs):
 
 
 def ex_TP2_3():
+    """
+    Fonction principale pour exécuter l'exercice 3 du TP2, qui permet à l'utilisateur de choisir entre
+    calculer la MSE pour différentes valeurs de λ ou tracer la courbe d'apprentissage de la MSE pour λ=0 et λ=1.
+    """
     # Nombre d'épisodes d'apprentissage
     N = 10000
 

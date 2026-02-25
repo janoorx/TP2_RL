@@ -134,10 +134,25 @@ def evaluate_policy(Qsa, n_test):
 
 
 def compute_optimal_value_function(Qsa):
+    """
+    Calcule la fonction de valeur optimale V*(s) à partir de la table Q(s, a) apprise.
+
+    Args:
+        Qsa (np.array): table de valeurs d'action Q(s, a) apprise
+    Returns:
+        np.array: table de la fonction de valeur optimale V*(s) pour chaque état s
+    """
     return Qsa.max(axis=2)
 
 
 def plot_value_surface(Vs):
+    """
+    Affiche graphiquement la fonction de valeur optimale V*(s) en 3D, avec l'axe X représentant la valeur du dealer, 
+    l'axe Y représentant la valeur du joueur, et l'axe Z représentant V*(s).
+
+    Args:
+        Vs (np.array): table de la fonction de valeur optimale V*(s) pour chaque état s
+    """
     print("Affichage graphique de la politique optimale...")
     X = np.arange(1, N_DEALER + 1)
     Y = np.arange(1, N_PLAYER + 1)
@@ -154,6 +169,10 @@ def plot_value_surface(Vs):
     plt.show()
 
 def ex_TP2_2():
+    """
+    Execute l'algorithme de contrôle Monte Carlo pour apprendre la politique optimale au Blackjack, 
+    évalue la politique apprise en jouant un certain nombre de parties, et affiche graphiquement la fonction de valeur optimale V*(s) en 3D.
+    """
      # Nombre d'itérations par épisode
     N = 1000000
     # Paramètre de contrôle de l'exploration

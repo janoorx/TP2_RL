@@ -8,7 +8,6 @@ def step(state, action):
     Args:
         state: état actuel du jeu, un dictionnaire avec les clés "player" et "dealer" représentant les points actuels du joueur et du dealer
         action: action choisie par le joueur, soit "hit" pour tirer une carte, soit "stick" pour rester
-
     Returns:
         next_state: état suivant du jeu après l'action, un dictionnaire avec les clés "player" et "dealer" représentant les points actuels du joueur et du dealer
         reward: récompense obtenue après l'action, un entier qui peut être -1 (perte), 0 (égalité) ou 1 (gain)
