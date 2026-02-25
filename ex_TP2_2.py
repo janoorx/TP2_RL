@@ -11,6 +11,18 @@ N_DEALER = 10
 N_PLAYER = 21
 
 def greedy_policy(state, Qsa, Ns, N0):
+    """
+    Politique epsilon-greedy
+
+    Args:
+        state (dict): état actuel du jeu
+        Qsa (np.array): table de valeurs d'action Q(s, a)
+        Ns (np.array): table du nombre de visites de chaque état Ns(s)
+        N0 (int): paramètre de contrôle de l'exploration
+    Returns:
+        str: action choisie ("hit" ou "stick")
+    
+    """
     dealer_i = state["dealer"] - 1
     player_i = state["player"] - 1
     epsilon = N0 / (N0 + Ns[dealer_i, player_i])
@@ -28,6 +40,14 @@ def greedy_policy(state, Qsa, Ns, N0):
 
 
 def init_tables():
+    """
+    Initialise les tables Q(s, a), N(s, a) et N(s) pour le contrôle Monte Carlo
+
+    Returns:
+        Qsa (np.array): table de valeurs d'action Q(s, a) initialisée à zéro
+        Nsa (np.array): table du nombre de visites de chaque paire (s, a) initialisée à zéro
+        Ns (np.array): table du nombre de visites de chaque état s initialisée à zéro
+    """
     Qsa = np.zeros((N_DEALER, N_PLAYER, len(ACTIONS)))
     Nsa = np.zeros((N_DEALER, N_PLAYER, len(ACTIONS)))
     Ns = np.zeros((N_DEALER, N_PLAYER))
@@ -35,7 +55,17 @@ def init_tables():
 
 
 def train_monte_carlo_control(n_episodes, N0):
+    """
+    Cette fonction implémente l'algorithme de contrôle Monte Carlo pour apprendre la politique optimale au Blackjack.
 
+    Args:
+        n_episodes (int): nombre d'épisodes d'apprentissage
+        N0 (int): paramètre de contrôle de l'exploration pour la politique epsilon-greedy
+    Returns:
+        Qsa (np.array): table de valeurs d'action Q(s, a) apprise
+        Nsa (np.array): table du nombre de visites de chaque paire (s, a) après l'apprentissage
+        Ns (np.array): table du nombre de visites de chaque état s après l'apprentissage
+    """
     Qsa, Nsa, Ns = init_tables()
 
     print("Début de l'apprentissage MC avec", n_episodes, "épisodes...")
@@ -76,6 +106,15 @@ def train_monte_carlo_control(n_episodes, N0):
 
 
 def evaluate_policy(Qsa, n_test):
+    """
+    Évalue la politique apprise à partir de la table Q(s, a) en jouant un certain nombre de parties et en calculant le taux de victoire.
+
+    Args: 
+        Qsa (np.array): table de valeurs d'action Q(s, a) apprise
+        n_test (int): nombre de parties à jouer pour évaluer la politique
+    Returns:
+        float: taux de victoire de la politique apprise sur les parties testées
+    """
     total_win = 0
     for _ in range(n_test):
         state = init_game()

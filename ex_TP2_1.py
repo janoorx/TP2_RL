@@ -2,15 +2,17 @@ import random
 
 #Question 1
 def step(state, action):
-    """
-    Docstring pour step
-    
-    :param state: Description
-    :param action: Description
+    """ 
+    Effectue une action dans le jeu de Blackjack.
 
-    :return: next_state, reward, terminal
+    Args:
+        state: état actuel du jeu, un dictionnaire avec les clés "player" et "dealer" représentant les points actuels du joueur et du dealer
+        action: action choisie par le joueur, soit "hit" pour tirer une carte, soit "stick" pour rester
 
-    terminal est un booléen, True si c'est terminé, False sinon
+    Returns:
+        next_state: état suivant du jeu après l'action, un dictionnaire avec les clés "player" et "dealer" représentant les points actuels du joueur et du dealer
+        reward: récompense obtenue après l'action, un entier qui peut être -1 (perte), 0 (égalité) ou 1 (gain)
+        terminal: booléen indiquant si le jeu est terminé (True) ou non (False)
     """
     if action=="hit":
         state["player"] += draw_card()
@@ -42,9 +44,10 @@ def step(state, action):
 # Question 2
 def draw_card():
     """
-    Docstring pour draw_card
+    Tire une carte aléatoire. Les cartes ont une valeur entre 1 et 10, et peuvent être rouges (valeur négative) ou noires (valeur positive).
 
-    :return: card_value
+    Returns: 
+        int: la valeur de la carte tirée, qui peut être négative (carte rouge) ou positive (carte noire)
     """
     value = random.randint(1, 10)
     sign = random.choice([-1, 1, 1]) # 1/3 chance de tirer une carte rouge, 2/3 chance de tirer une carte noire
@@ -53,9 +56,10 @@ def draw_card():
 
 def init_game():
     """
-    Docstring pour init_game
+    Initialise le jeu en tirant une carte pour le joueur et une pour le dealer.
 
-    :return: state
+    Returns:
+        state: un dictionnaire avec les clés "player" et "dealer" représentant les points
     """
     state = {}
     state["player"] = random.randint(1, 10)
@@ -64,7 +68,11 @@ def init_game():
 
 #Game loop test
 def ex_TP2_1():
-    print
+    """
+    Simule une partie de Blackjack en utilisant les fonctions définies précédemment. 
+    Le joueur peut entrer des actions ("hit" ou "stick") et le jeu affiche l'état suivant, 
+    la récompense obtenue et si le jeu est terminé ou non.
+    """
     state = init_game()
     print("Initial state:", state)
 
