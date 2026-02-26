@@ -143,12 +143,12 @@ def ex_TP3_1():
     N_lambda = 10
     Qsa_MC, _, _ = train_monte_carlo_control(N, N0) #On récupère uniquement Qsa du Monte Carlo pour le comparer avec SARSA(λ)
     
-    choice = input("\033[1;36mVoulez-vous exécuter la question 2 (Différents lambdas) ou la question 3 (MSE) ou quitter l'exercice 'q'? (2, 3 ou q) : \033[0;37m")
-    if choice == "2":
+    choice = input("\033[1;36mVoulez-vous exécuter la question 3.1 (MSE pour Différents lambdas) ou la question 3.2 (MSE pour lambda=0 et lambda=1) ou quitter l'exercice 'q'? (1 ou 2 ou q) : \033[0;37m")
+    if choice == "1":
         lambda_values = [i / N_lambda for i in range(0, N_lambda + 1)] 
         MSEs_SARSA_lambda = test_SARSA_linear_variable_lambdas(N, lambda_values, Qsa_MC)
         plot_MSE_lambda(MSEs_SARSA_lambda, lambda_values)
-    elif choice == "3":  
+    elif choice == "2":  
         MSEs = []
             
         lambda_test = 0
@@ -163,7 +163,7 @@ def ex_TP3_1():
     elif choice == "q":
         print("\033[1;32mVous avez quitté l'exercice 1 du TP3.\033[0;37m")
     else:
-        print("\033[1;31mChoix invalide. Veuillez entrer 2 ou 3.\033[0;37m")
+        print("\033[1;31mChoix invalide. Veuillez entrer 1 ou 2 ou q.\033[0;37m")
 
 if __name__ == "__main__":
     ex_TP3_1()

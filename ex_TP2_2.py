@@ -174,7 +174,7 @@ def ex_TP2_2():
     évalue la politique apprise en jouant un certain nombre de parties, et affiche graphiquement la fonction de valeur optimale V*(s) en 3D.
     """
      # Nombre d'itérations par épisode
-    N = 1000000
+    N = 100000
     # Paramètre de contrôle de l'exploration
     N0 = 100
     # Nombre d'itérations du test de la politique optimale
