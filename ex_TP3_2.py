@@ -76,26 +76,7 @@ def train_Q_learning_lambda(n_episodes, N0, Qsa_MC):
 
     return Qsa, Nsa, Ns, MSEs
 
-def plot_MSE_Q_learning_lambda(list_MSEs):
-    """
-    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par Q-learning(λ)
-    et la table Q(s, a) apprise par Monte Carlo
 
-    Args:
-        list_MSEs (list): liste de tuples (λ, MSEs) où λ est la valeur de lambda utilisée et MSEs est la liste des MSE à chaque épisode d'apprentissage pour cette valeur de lambda
-    """
-    #Il y a deux lambda (0 et 1) et le MSE du Q-learning
-    for name, MSEs in list_MSEs:
-        if(name == "Q-learning"):
-            plt.plot(MSEs, label=name,linestyle="solid", color="red")
-        else:
-            plt.plot(MSEs, label=f"lambda = {name}")
-    plt.xlabel('Episodes')
-    plt.ylabel('MSE with Monte Carlo Optimal Qsa')
-    plt.title('MSE of Q-learning(λ) and SARSA with different λ values')
-    plt.legend()
-    plt.grid()
-    plt.show()
 
 
 def ex_TP3_2():
@@ -123,7 +104,7 @@ def ex_TP3_2():
         _, _, _, MSEs_Q_learning = train_Q_learning_lambda(N,N0,Qsa_MC)
         MSEs.append(("Q-learning", MSEs_Q_learning))
 
-        plot_MSE_Q_learning_lambda(MSEs)
+        plot_MSE(MSEs)
     elif choice == "3":  
         Qsa_Q, _, _, _ = train_Q_learning_lambda(N,N0,Qsa_MC)
         Vs = compute_optimal_value_function(Qsa_Q)

@@ -126,25 +126,27 @@ def plot_MSE_lambda(MSEs, lambda_values):
     plt.grid()
     plt.show()
 
-def plot_MSEs_learning(list_MSEs):
+def plot_MSE(list_MSEs):
     """
-    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par SARSA(λ) 
-    et la table Q(s, a) apprise par Monte Carlo en fonction du numéro d’épisode d'apprentissage, pour différentes valeurs de λ.
-
-    Args:
-        list_MSEs (list): liste de tuples (λ, MSEs)
+    Affiche graphiquement l'erreur quadratique moyenne (MSE) entre la table Q(s, a) apprise par SARSA(λ)
+    et la table Q(s, a) apprise par Monte Carlo en fonction du numéro d’épisode d’apprentissage pour différentes valeurs de λ.
+   
+    Args: list_MSEs (list): liste de tuples (lambda_value, MSEs), où lambda_value est la valeur de λ testée et MSEs est la liste des MSE à chaque épisode d’apprentissage pour cette valeur de λ.
+    Returns: None
     """
-    print("Affichage graphique de la MSE en fonction des épisodes d'apprentissage ...")
-    plt.figure()
-    for lambda_val, MSEs in list_MSEs:
-        plt.plot(MSEs, label=f'λ={lambda_val}')
-    plt.xlabel('Épisodes d\'apprentissage')
-    plt.ylabel('MSE entre Qsa SARSA(λ) et Qsa Monte Carlo')
-    plt.title('MSE en fonction des épisodes d\'apprentissage pour différentes valeurs de λ')
+    #!CHANGER LES DOCS STRING
+    # Il y a deux lambda (0 et 1) et le MSE du Q-learning
+    for name, MSEs in list_MSEs:
+        if(name == "Q-learning"):
+            plt.plot(MSEs, label=name,linestyle="solid", color="red")
+        else:
+            plt.plot(MSEs, label=f"lambda = {name}")
+    plt.xlabel('Episodes')
+    plt.ylabel('MSE with Monte Carlo Optimal Qsa')
+    plt.title('MSE of Q-learning(λ) and SARSA with different λ values')
     plt.legend()
     plt.grid()
     plt.show()
-
 
 def ex_TP2_3():
     """
@@ -179,7 +181,7 @@ def ex_TP2_3():
         _, _, _, MSEs_1 = train_sarsa_lambda(N,N0,lambda_test,Qsa_MC)
         MSEs_lambda.append((lambda_test, MSEs_1))
         
-        plot_MSEs_learning(MSEs_lambda)
+        plot_MSE(MSEs_lambda)
     elif (choice == 'q'):
         print("\033[1;32mVous avez quitté l'exercice 3 du TP2.\033[0;37m")
     else:
